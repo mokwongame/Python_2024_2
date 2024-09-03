@@ -1,0 +1,21 @@
+pip install wheel
+
+pip install jupyterlab
+pip install jupyter
+
+-> jupyter notebook
+-> notebook.bat에 위 명령을 넣고 notebook을 더블 클릭
+
+pip install pyserial
+
+pip install psycopg2
+
+pip install matplotlib
+
+pip install pandas
+
+
+
+
+
+
