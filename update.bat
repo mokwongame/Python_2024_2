@@ -1,4 +1,4 @@
 chcp 65001
 git add --all
-git commit -m "PythonHub에 DB 메소드 추가"
+git commit -m "volt_table에 전압 측정값 삽입"
 git push -u origin master

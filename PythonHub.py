@@ -66,3 +66,29 @@ class PythonHub:
         self.cursor.execute(cmd)
         self.conn.commit()
 
+    # Voltmeter Method
+    def getVolt(self):
+        # C++: try-catch; Python: try-except
+        try:
+            sVolt = self.talkListen('get volt')
+            volt = float(sVolt)
+            return volt
+        except: # try 코드 블록 실행에서 오류가 난 경우에 실행되는 부분
+            print('Serial error: get volt')
+            return -1 # 오류난 경우는 음수를 반환
+
+    def insertVoltToTable(self):
+        volt = self.getVolt()
+        if volt >= 0: # 정상적인 측정
+            meas_time = time.time() # 현재 시간을 double로 반환
+            self.connectDb()
+            # f'...': formatted string -> C의 printf()와 비슷
+            self.writeDb(f'INSERT INTO volt_table(id, meas_time, volt) VALUES({int(meas_time)}, {meas_time}, {volt})')
+            self.closeDb()
+            return True
+        else: return False # 측정에 류류
+            
+
+
+
+
