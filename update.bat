@@ -1,4 +1,4 @@
 chcp 65001
 git add --all
-git commit -m "DB 서버에 연결 설정"
+git commit -m "DB에 SQL 쓰기와 결과 얻기"
 git push -u origin master
