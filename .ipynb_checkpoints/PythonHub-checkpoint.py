@@ -95,5 +95,27 @@ class PythonHub:
         self.closeDb()
         return nCount
 
+    def sampleVoltsToTable(self, nCount, delay):
+        i = 0
+        while i < nCount:
+            bResult = self.insertVoltToTable()
+            if bResult:
+                print(f'i = {i}th meas.')
+                i += 1
+                PythonHub.wait(delay)
+
+    def loadVoltTable(self):
+        self.connectDb()
+        self.writeDb('SELECT meas_time, volt FROM volt_table')
+        results = self.cursor.fetchall() # results는 record를 원소로 하는 list
+        self.closeDb()
+        # meas_time, volt 값을 나누어서 반환환
+        timeData = () # () 의미: 빈 tuple
+        voltData = ()
+        for record in results:
+            timeData += (record[0],) # (a,) 의미: 원소가 1인 tuple
+            voltData += (record[1],)
+        return (timeData, voltData)
+
 
 
