@@ -8,14 +8,12 @@ pip install jupyter
 
 pip install pyserial
 
-pip install psycopg2
-
 pip install matplotlib
 
 pip install pandas
 
-
-
-
-
-
+pip install psycopg2
+-> DLL load failed while importing _psycopg이 발생한 경우는 최신 버전을 설치
+===
+pip install psycopg
+pip install "psycopg[binary]"
