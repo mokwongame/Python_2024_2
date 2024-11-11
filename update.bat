@@ -1,4 +1,4 @@
 chcp 65001
 git add --all
-git commit -m "psycopg 최신 버전 설치 방법"
+git commit -m "DB 서버에 연결 설정"
 git push -u origin master
