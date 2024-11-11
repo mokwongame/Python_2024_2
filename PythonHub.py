@@ -1,5 +1,6 @@
 from serial import Serial
 import time
+import psycopg
 
 # 파이썬에서 생성자명과 소멸자명은 하나로 정해짐
 # 접근 그룹 규칙
@@ -51,3 +52,17 @@ class PythonHub:
     def talkListen(self, sCmd):
         self.talk(sCmd)
         return self.listen()
+
+    # DB Method
+    def connectDb(self):
+        self.conn = psycopg.connect(host='localhost', port='5432', dbname='postgres', user='postgres', password='2024')
+        self.cursor = self.conn.cursor()
+
+    def closeDb(self):
+        self.cursor.close()
+        self.conn.close()
+
+    def writeDb(self, cmd):
+        self.cursor.execute(cmd)
+        self.conn.commit()
+
