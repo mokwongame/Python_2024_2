@@ -88,7 +88,12 @@ class PythonHub:
             return True
         else: return False # 측정에 류류
             
-
+    def countVoltTable(self):
+        self.connectDb()
+        self.writeDb('SELECT COUNT(*) FROM volt_table');
+        nCount = self.cursor.fetchone()[0] # fetchone() 함수는 tuple을 반환; [0]을 써서 첫번째 원소를 다시 접근
+        self.closeDb()
+        return nCount
 
 
 
