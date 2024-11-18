@@ -1,6 +1,7 @@
 from serial import Serial
 import time
 import psycopg
+import pandas.io.sql as psql
 
 # 파이썬에서 생성자명과 소멸자명은 하나로 정해짐
 # 접근 그룹 규칙
@@ -119,7 +120,12 @@ class PythonHub:
 
     # pandas를 써서 구현
     def statVoltTable(self): # 전압의 평균, 최대값, 최소값, 분산, 표준 편차를 출력
-        pass
+        self.connectDb()
+        # pandas 처리
+        df = psql.read_sql('SELECT * FROM volt_table', self.conn)
+        self.closeDb()
+        serialVolt = df['volt']
+        print(f'평균 = {serialVolt.mean()}')
 
     # matplotlib를 써서 구현
     def plotVoltTable(self): # volt_table의 전압 측정값을 그리고 그림으로 저장
