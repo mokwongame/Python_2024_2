@@ -2,6 +2,7 @@ from serial import Serial
 import time
 import psycopg
 import pandas.io.sql as psql
+import matplotlib.pyplot as plt
 
 # 파이썬에서 생성자명과 소멸자명은 하나로 정해짐
 # 접근 그룹 규칙
@@ -128,8 +129,9 @@ class PythonHub:
         print(f'평균 = {serialVolt.mean()}')
 
     # matplotlib를 써서 구현
-    def plotVoltTable(self): # volt_table의 전압 측정값을 그리고 그림으로 저장
-        pass
-
+    def plotVoltTable(self, sFilename): # volt_table의 전압 측정값을 그리고 그림으로 저장
+        timeData, voltData = self.loadVoltTable()
+        plt.plot(timeData, voltData)
+        plt.savefig(sFilename) 
 
 
