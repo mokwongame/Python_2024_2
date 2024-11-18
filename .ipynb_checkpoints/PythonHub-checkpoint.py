@@ -117,5 +117,13 @@ class PythonHub:
             voltData += (record[1],)
         return (timeData, voltData)
 
+    # pandas를 써서 구현
+    def statVoltTable(self): # 전압의 평균, 최대값, 최소값, 분산, 표준 편차를 출력
+        pass
+
+    # matplotlib를 써서 구현
+    def plotVoltTable(self): # volt_table의 전압 측정값을 그리고 그림으로 저장
+        pass
+
 
 

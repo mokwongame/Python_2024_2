@@ -1,4 +1,4 @@
 chcp 65001
 git add --all
-git commit -m "matplotlib 연습"
+git commit -m "statVoltTable, plotVoltTable 구현 시작"
 git push -u origin master
