@@ -9,12 +9,19 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         # URL 사용하여 GET method 처리
         print('path = ' + self.path) # path: IP 주소 다음에 오는 URL 정보
         if self.path == '/': self.writeHome()
+        else: self.writeNotFound()
 
-    def writeHome(self):
-        # 재빠르게 header로 response를 전송
-        self.send_response(200) # 성공(OK)
+    def writeHead(self, code):
+        self.send_response(code) # 성공(OK)
         self.send_header('content-type', 'text/html')
         self.end_headers()
+
+    def writeHtml(self, html):
+        self.wfile.write(html.encode())
+    
+    def writeHome(self):
+        # 재빠르게 header로 response를 전송
+        self.writeHead(200)
         # HTML 전송
         nTime = time.time()
         html = '<html>'
@@ -25,7 +32,18 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         html += '<div>IoT System Design</div>'
         html += f'<div>현재 날짜와 시간은 {time.ctime(nTime)}입니다.</div>'
         html += '</body></html>'
-        self.wfile.write(html.encode()) # Unicode(가변 코드) -> byte(고정 코드; 크기는 1byte) 변경
+        self.writeHtml(html) # Unicode(가변 코드) -> byte(고정 코드; 크기는 1byte) 변경
+
+    def writeNotFound(self):
+        self.writeHead(404)
+        html = '<html>'
+        html += '<head>'
+        html += '<meta http-equiv="content-type" content="text/html" charset="UTF-8">'
+        html += '<title>페이지 없음</title>'
+        html += '</head><body>'
+        html += f'<div>요청하신 페이지 {self.path}가 없습니다.</div>'
+        html += '</body></html>'
+        self.writeHtml(html)
         
         
 
