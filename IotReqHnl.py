@@ -1,6 +1,7 @@
 #IotReqHnl: IoT request handler
 from http.server import SimpleHTTPRequestHandler
 from PythonHub import PythonHub
+from urllib import parse
 import time
 
 # class 뒤 (...) 의미: 객체 지향의 상속
@@ -8,9 +9,11 @@ class IotReqHnl(SimpleHTTPRequestHandler):
     # GET method의 override(덮어쓰기)
     def do_GET(self):
         # URL 사용하여 GET method 처리
-        print('path = ' + self.path) # path: IP 주소 다음에 오는 URL 정보
-        if self.path == '/': self.writeHome()
-        elif self.path == '/meas_volt': self.writeMeasVolt()
+        result = parse.urlsplit(self.path)
+        print('path: ' + result.path + '; query: ' + result.query) # path: IP 주소 다음에 오는 URL 정보
+        if result.path == '/': self.writeHome()
+        elif result.path == '/meas_volt': self.writeMeasVolt()
+        elif result.path == '/sample_volt': self.writeSampleVolt(result.query)
         else: self.writeNotFound()
 
     def writeHead(self, code):
@@ -69,6 +72,9 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         html += f'<div>전압을 측정한 회수는 {self.server.gateway.countVoltTable()}번입니다.</div>'
         html += '</body></html>'
         self.writeHtml(html)
+
+    def writeSampleVolt(self, query):
+        pass
         
 
 
