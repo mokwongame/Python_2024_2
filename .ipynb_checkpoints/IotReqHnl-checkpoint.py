@@ -32,6 +32,8 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         html += '<title>IoT Web Server</title>'
         html += '</head><body>'
         html += '<div>IoT System Design</div>'
+        html += '<div>이름:목원이</div>'
+        html += '<div><img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Research_topics_in_Business-applied_Artificial_Intelligence.png" width="300" height="300"/></div>'
         html += f'<div>현재 날짜와 시간은 {time.ctime(nTime)}입니다.</div>'
         html += f'<div>전압을 측정한 회수는 {self.server.gateway.countVoltTable()}번입니다.</div>'
         html += '</body></html>'
