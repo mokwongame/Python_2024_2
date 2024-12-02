@@ -120,6 +120,17 @@ class PythonHub:
             voltData += (record[1],)
         return (timeData, voltData)
 
+    def writeHtmlVoltTable(self):
+        (timeData, voltData) = self.loadVoltTable()
+        html = '<table width = "100%" border="1">'
+        html += '<thead><th>번호</th><th>측정 일시</th><th>측정 전압</th></thead>'
+        i = 1
+        for (meas_time, volt) in zip(timeData, voltData) :
+            html += f'<tr><td>{i}</td><td>{time.ctime(meas_time)}</td><td>{volt} V</td></tr>'
+            i += 1
+        html += '</table>'
+        return html
+    
     # pandas를 써서 구현
     def statVoltTable(self): # 전압의 평균, 최대값, 최소값, 분산, 표준 편차를 출력
         self.connectDb()

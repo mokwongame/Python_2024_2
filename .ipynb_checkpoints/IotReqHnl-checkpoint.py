@@ -43,6 +43,8 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         html += '<div><img src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Research_topics_in_Business-applied_Artificial_Intelligence.png" width="300" height="300"/></div>'
         html += f'<div>현재 날짜와 시간은 {time.ctime(nTime)}입니다.</div>'
         html += f'<div>전압을 측정한 회수는 {self.server.gateway.countVoltTable()}번입니다.</div>'
+        html += '<div><b>현재까지 측정한 모든 전압표</b></div>'
+        html += '<div>' + self.server.gateway.writeHtmlVoltTable() + '</div>'
         html += '</body></html>'
         self.writeHtml(html) # Unicode(가변 코드) -> byte(고정 코드; 크기는 1byte) 변경
 
