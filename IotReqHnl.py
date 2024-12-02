@@ -74,7 +74,23 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         self.writeHtml(html)
 
     def writeSampleVolt(self, query):
-        pass
+        result = parse.parse_qs(query) # qs: query string
+        print(result)
+        nCount = int(result['count'][0])
+        delay = float(result['delay'][0])
+        self.server.gateway.sampleVoltsToTable(nCount, delay)
+        self.writeHead(200)
+        html = '<html>'
+        html += '<head>'
+        html += '<meta http-equiv="content-type" content="text/html" charset="UTF-8">'
+        html += '<title>전압 여러 번 측정r</title>'
+        html += '</head><body>'
+        html += '<div><a href="/">홈</a></div>'
+        html += '<div><br></div>'
+        html += f'<div>전압을 주기 {delay} 초로 {nCount} 번 측정하였습니다.</div>'
+        html += f'<div>전압을 측정한 회수는 {self.server.gateway.countVoltTable()}번입니다.</div>'
+        html += '</body></html>'
+        self.writeHtml(html)
         
 
 
