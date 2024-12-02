@@ -88,7 +88,7 @@ class PythonHub:
             self.writeDb(f'INSERT INTO volt_table(id, meas_time, volt) VALUES({int(meas_time)}, {meas_time}, {volt})')
             self.closeDb()
             return True
-        else: return False # 측정에 류류
+        else: return False # 측정에 오류
             
     def countVoltTable(self):
         self.connectDb()
