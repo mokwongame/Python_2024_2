@@ -44,6 +44,7 @@ class PythonHub:
         else: return ''
 
     def talk(self, sCmd):
+        #print('cmd = ' + sCmd)
         return self.writeSerial(sCmd + '\n')
 
     def listen(self):
@@ -132,6 +133,9 @@ class PythonHub:
     def plotVoltTable(self, sFilename): # volt_table의 전압 측정값을 그리고 그림으로 저장
         timeData, voltData = self.loadVoltTable()
         plt.plot(timeData, voltData)
-        plt.savefig(sFilename) 
+        plt.savefig(sFilename)
+
+    def setLed(self, color):
+        self.talk('set led ' + color)
 
 

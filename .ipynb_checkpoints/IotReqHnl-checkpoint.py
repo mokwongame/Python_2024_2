@@ -14,6 +14,7 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         if result.path == '/': self.writeHome()
         elif result.path == '/meas_volt': self.writeMeasVolt()
         elif result.path == '/sample_volt': self.writeSampleVolt(result.query)
+        elif result.path == '/led': self.writeLed(result.query)
         else: self.writeNotFound()
 
     def writeHead(self, code):
@@ -89,6 +90,23 @@ class IotReqHnl(SimpleHTTPRequestHandler):
         html += '<div><br></div>'
         html += f'<div>전압을 주기 {delay} 초로 {nCount} 번 측정하였습니다.</div>'
         html += f'<div>전압을 측정한 회수는 {self.server.gateway.countVoltTable()}번입니다.</div>'
+        html += '</body></html>'
+        self.writeHtml(html)
+
+    def writeLed(self, query):
+        result = parse.parse_qs(query) # qs: query string
+        print(result)
+        color = result['color'][0]
+        self.server.gateway.setLed(color)
+        self.writeHead(200)
+        html = '<html>'
+        html += '<head>'
+        html += '<meta http-equiv="content-type" content="text/html" charset="UTF-8">'
+        html += '<title>LED 켜기</title>'
+        html += '</head><body>'
+        html += '<div><a href="/">홈</a></div>'
+        html += '<div><br></div>'
+        html += f'<div>LED를 {color} 색깔로 켰습니다..</div>'
         html += '</body></html>'
         self.writeHtml(html)
         
